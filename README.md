@@ -4,7 +4,7 @@ This project include some practical examples for building production-ready Retri
 ### 1.) Introduction to Retrieval-Augmented Generation (RAG) Systems
 Retrieval-Augmented Generation (RAG) systems represent a powerful approach that combines the strengths of large language models (LLMs) and information retrieval systems. The core idea is to leverage the generative capabilities of LLMs while grounding their responses in factual information retrieved from a corpus or knowledge base. By integrating these two components, RAG systems can generate responses that are not only coherent and fluent but also factually accurate and grounded in the underlying data sources. The theoretical foundation lies in recognizing that while LLMs excel at generating human-like text, they often struggle with factual accuracy, especially in specific domains. Conversely, information retrieval systems are adept at finding relevant information but lack the ability to synthesize and present it coherently. RAG systems aim to leverage the strengths of both approaches, allowing for the generation of responses that are fluent, contextually appropriate, and factually grounded in the underlying data. The key theoretical challenge lies in effectively integrating the retrieval and generation components, developing techniques for efficient retrieval and conditioning the language model on the retrieved information, maintaining coherence and consistency across multiple rounds, handling ambiguity and uncertainty, and ensuring faithful yet natural and engaging responses. here's a real-world example of using a RAG system with LlamaIndex to build a question-answering system for a large corpus of scientific papers:
 
-'''python
+```python
 from llama_index import GPTVectorStoreIndex, SimpleDirectoryReader, ServiceContext
 from langchain.llms import OpenAI
 import os
@@ -34,4 +34,4 @@ follow_up_query = "Can you provide more details on the potential applications of
 follow_up_response = index.query(follow_up_query, previous_query=query, previous_result=response)
 print(follow_up_response)
 
-'''
+```
