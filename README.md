@@ -166,3 +166,5 @@ print(f"F1 Score: {metrics['f1']}")
 
 ```
 In this example, we're evaluating a RAG system built using LlamaIndex for an e-commerce product catalog.
+
+These examples demonstrate how to use LlamaIndex for building RAG systems, including loading data from various sources, creating vector indexes, querying the indexes, and evaluating the system's performance. 
