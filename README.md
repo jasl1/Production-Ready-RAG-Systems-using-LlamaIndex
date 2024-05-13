@@ -82,3 +82,49 @@ print(response)
 In this example, we're building a RAG system for a large-scale knowledge base that contains information from various sources, including text files, PDFs, and other file types. 
 
 ### 3.) Building a QA System on Private Data Using LlamaIndex
+By seamlessly integrating data ingestion mechanisms, indexing techniques, embedding algorithms, vector databases, state-of-the-art LLM integration, and retrieval algorithms, LlamaIndex facilitates the development of RAG systems that can generate responses that are not only coherent and fluent but also grounded in factual information from the underlying private data sources. This approach addresses the limitations of traditional question-answering systems, which often struggle with factual accuracy or rely on publicly available data sources that may not be relevant or tailored to the specific domain or context of the organization. By leveraging the power of LLMs and information retrieval systems, LlamaIndex empowers organizations to unlock the value of their proprietary data, enabling them to provide accurate and contextually relevant responses to complex queries, thereby enhancing decision-making processes and driving innovation. Here's a real-world example of using LlamaIndex to build a question-answering system on private data, specifically for a large legal firm's knowledge base:
+
+```python
+from llama_index import GPTVectorStoreIndex, ServiceContext, StorageContext, load_index_from_storage
+from langchain.llms import OpenAI
+from langchain.document_loaders import UnstructuredFileLoader, UnstructuredPDFLoader
+import os
+
+# Load data from various sources (legal documents, case files, etc.)
+data_dir = "path/to/legal/knowledge/base"
+loaders = []
+for file in os.listdir(data_dir):
+    file_path = os.path.join(data_dir, file)
+    if file.endswith(".pdf"):
+        loader = UnstructuredPDFLoader(file_path)
+    else:
+        loader = UnstructuredFileLoader(file_path)
+    loaders.append(loader)
+
+documents = []
+for loader in loaders:
+    documents.extend(loader.load())
+
+# Create a vector store index using OpenAI's GPT-3 for embeddings and Weaviate as the vector database
+embed_model = OpenAI(model_name="text-davinci-003", max_tokens=8192)
+service_context = ServiceContext.from_defaults(embed_model=embed_model, vector_store_config={'type': 'weaviate'})
+index = GPTVectorStoreIndex.from_documents(documents, service_context=service_context)
+
+# Save the index to persistent storage
+storage_context = StorageContext.from_defaults()
+index.storage_context.persist(persist_dir="path/to/storage")
+
+# Load the index from persistent storage
+loaded_index = load_index_from_storage(storage_context, persist_dir="path/to/storage")
+
+# Query the index with a complex legal question
+query = "What are the key legal considerations and precedents regarding intellectual property rights in the context of software development and open-source licensing?"
+
+# Use the RAG system to generate a response
+response = loaded_index.query(query)
+print(response)
+
+```
+In this example, we're building a question-answering system for a legal firm's knowledge base, which includes various types of legal documents, case files, and other relevant data. 
+
+### 4.) Evaluating RAG Systems
