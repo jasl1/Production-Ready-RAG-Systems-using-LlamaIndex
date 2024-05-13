@@ -35,3 +35,7 @@ follow_up_response = index.query(follow_up_query, previous_query=query, previous
 print(follow_up_response)
 
 ```
+
+In this example, we're building a RAG system to answer complex questions related to quantum computing using a corpus of scientific papers.
+
+### 2.) Components of LlamaIndex
